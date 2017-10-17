@@ -18,6 +18,9 @@ public class UpdateDeltaTimeSystem : IInitializeSystem, IExecuteSystem
 
     public void Execute()
     {
+        if (_contexts.game.gameStatus.Value != EnmGameStatus.Running)
+            return;
+
         _contexts.game.deltaTime.Value += Time.deltaTime;
         if (_contexts.game.deltaTime.Value >= 1)
         {

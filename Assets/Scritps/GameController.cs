@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Entitas;
+﻿using Entitas;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -15,6 +13,7 @@ public class GameController : MonoBehaviour
         systems = createSystems(contexts);
         var logicSystems = createLogicSystems(contexts);
         systems.Add(logicSystems);
+        contexts.game.SetReplaySystem(logicSystems);
 
         systems.Initialize();
     }
@@ -33,6 +32,8 @@ public class GameController : MonoBehaviour
     Systems createSystems(Contexts contexts)
     {
         return new Feature("Game")
+            .Add(new GameInitializeSystem(contexts))
+
             .Add(new CleanUpDestroyedEntitySystem(contexts))
             ;
     }
