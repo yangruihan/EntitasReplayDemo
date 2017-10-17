@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entitas;
 
 public class GameInitializeSystem : IInitializeSystem

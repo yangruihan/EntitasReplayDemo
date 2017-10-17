@@ -24,6 +24,6 @@ public class NotifyTickChangeSystem : ReactiveSystem<GameEntity>
 
     protected override void Execute(List<GameEntity> entities)
     {
-        Debug.Log(_contexts.game.tick.Value);
+        //Debug.Log(_contexts.game.tick.Value);
     }
 }
