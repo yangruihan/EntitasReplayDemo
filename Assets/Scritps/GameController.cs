@@ -45,7 +45,7 @@ public class GameController : MonoBehaviour
             .Add(new UpdateDeltaTimeSystem(contexts))
 
             .Add(new ChangeTickSystem(contexts))
-            .Add(new TickChangeSystem(contexts))
+            .Add(new NotifyTickChangeSystem(contexts))
             ;
     }
 }

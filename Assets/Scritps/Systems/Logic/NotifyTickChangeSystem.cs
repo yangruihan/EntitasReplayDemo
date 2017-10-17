@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
-public class TickChangeSystem : ReactiveSystem<GameEntity>
+public class NotifyTickChangeSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
 
-    public TickChangeSystem(Contexts contexts) : base(contexts.game)
+    public NotifyTickChangeSystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
     }
