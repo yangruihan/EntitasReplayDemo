@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         systems.Execute();
+        systems.Cleanup();
     }
 
     void OnDestroy()
@@ -31,7 +32,9 @@ public class GameController : MonoBehaviour
 
     Systems createSystems(Contexts contexts)
     {
-        return new Feature("Game");
+        return new Feature("Game")
+            .Add(new CleanUpDestroyedEntitySystem(contexts))
+            ;
     }
 
     Systems createLogicSystems(Contexts contexts)
@@ -41,6 +44,7 @@ public class GameController : MonoBehaviour
 
             .Add(new UpdateDeltaTimeSystem(contexts))
 
+            .Add(new ChangeTickSystem(contexts))
             .Add(new TickChangeSystem(contexts))
             ;
     }
