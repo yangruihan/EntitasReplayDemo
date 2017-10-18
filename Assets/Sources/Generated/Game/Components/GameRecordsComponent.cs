@@ -12,7 +12,7 @@ public partial class GameContext {
     public RecordsComponent records { get { return recordsEntity.records; } }
     public bool hasRecords { get { return recordsEntity != null; } }
 
-    public GameEntity SetRecords(System.Collections.Generic.List<GameEntity> newInputRecords) {
+    public GameEntity SetRecords(System.Collections.Generic.List<InputRecordData> newInputRecords) {
         if (hasRecords) {
             throw new Entitas.EntitasException("Could not set Records!\n" + this + " already has an entity with RecordsComponent!",
                 "You should check if the context already has a recordsEntity before setting it or use context.ReplaceRecords().");
@@ -22,7 +22,7 @@ public partial class GameContext {
         return entity;
     }
 
-    public void ReplaceRecords(System.Collections.Generic.List<GameEntity> newInputRecords) {
+    public void ReplaceRecords(System.Collections.Generic.List<InputRecordData> newInputRecords) {
         var entity = recordsEntity;
         if (entity == null) {
             entity = SetRecords(newInputRecords);
@@ -49,14 +49,14 @@ public partial class GameEntity {
     public RecordsComponent records { get { return (RecordsComponent)GetComponent(GameComponentsLookup.Records); } }
     public bool hasRecords { get { return HasComponent(GameComponentsLookup.Records); } }
 
-    public void AddRecords(System.Collections.Generic.List<GameEntity> newInputRecords) {
+    public void AddRecords(System.Collections.Generic.List<InputRecordData> newInputRecords) {
         var index = GameComponentsLookup.Records;
         var component = CreateComponent<RecordsComponent>(index);
         component.InputRecords = newInputRecords;
         AddComponent(index, component);
     }
 
-    public void ReplaceRecords(System.Collections.Generic.List<GameEntity> newInputRecords) {
+    public void ReplaceRecords(System.Collections.Generic.List<InputRecordData> newInputRecords) {
         var index = GameComponentsLookup.Records;
         var component = CreateComponent<RecordsComponent>(index);
         component.InputRecords = newInputRecords;

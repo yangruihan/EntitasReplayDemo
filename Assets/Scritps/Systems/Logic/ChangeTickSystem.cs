@@ -1,16 +1,31 @@
+using System.Collections.Generic;
 using Entitas;
 
-public class ChangeTickSystem : IExecuteSystem
+public class ChangeTickSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
 
-    public ChangeTickSystem(Contexts contexts)
+    public ChangeTickSystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
     }
 
-    public void Execute()
+    protected override void Execute(List<GameEntity> entities)
     {
-        _contexts.game.ReplaceTick(_contexts.game.tick.Value + 1);
+        foreach (var entity in entities)
+        {
+            _contexts.game.ReplaceTick(_contexts.game.tick.Value + 1);
+            entity.isDestroyed = true;
+        }
+    }
+
+    protected override bool Filter(GameEntity entity)
+    {
+        return entity.isPushTick;
+    }
+
+    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
+    {
+        return context.CreateCollector(GameMatcher.PushTick);
     }
 }

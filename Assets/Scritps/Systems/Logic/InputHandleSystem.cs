@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
-public class InputDispatchSystem : ReactiveSystem<GameEntity>
+public class InputHandleSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
 
-    public InputDispatchSystem(Contexts _contexts) : base(_contexts.game)
+    public InputHandleSystem(Contexts _contexts) : base(_contexts.game)
     {
         this._contexts = _contexts;
     }
@@ -14,7 +15,7 @@ public class InputDispatchSystem : ReactiveSystem<GameEntity>
     {
         foreach (var entity in entities)
         {
-            entity.isRecord = true;
+            Debug.Log(entity.input.KeyCode);
         }
     }
 

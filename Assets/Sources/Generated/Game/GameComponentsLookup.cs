@@ -13,13 +13,14 @@ public static class GameComponentsLookup {
     public const int Destroyed = 2;
     public const int GameStatus = 3;
     public const int Input = 4;
-    public const int Record = 5;
-    public const int Records = 6;
-    public const int ReplaySystem = 7;
-    public const int Tick = 8;
-    public const int Time = 9;
+    public const int PushTick = 5;
+    public const int Record = 6;
+    public const int Records = 7;
+    public const int ReplaySystem = 8;
+    public const int Tick = 9;
+    public const int Time = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -27,6 +28,7 @@ public static class GameComponentsLookup {
         "Destroyed",
         "GameStatus",
         "Input",
+        "PushTick",
         "Record",
         "Records",
         "ReplaySystem",
@@ -40,6 +42,7 @@ public static class GameComponentsLookup {
         typeof(DestroyedComponent),
         typeof(GameStatusComponent),
         typeof(InputComponent),
+        typeof(PushTickComponent),
         typeof(RecordComponent),
         typeof(RecordsComponent),
         typeof(ReplaySystemComponent),
