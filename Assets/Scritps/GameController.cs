@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public PlayerInitData PlayerInitData;
+
     private Systems systems;
 
     void Start()
     {
         var contexts = Contexts.sharedInstance;
+
+        contexts.game.SetPlayerInitData(PlayerInitData);
 
         systems = new Systems();
 
@@ -39,9 +43,6 @@ public class GameController : MonoBehaviour
         systems.TearDown();
     }
 
-    /// <summary>
-    /// General
-    /// </summary>
     Systems CreateGeneralSystems(Contexts contexts)
     {
         return new Feature("Game")
@@ -69,10 +70,12 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Logic")
             .Add(new TickInitializeSystem(contexts))
+            .Add(new PlayerInitializeSystem(contexts))
 
             .Add(new ChangeTickSystem(contexts))
             .Add(new InputHandleSystem(contexts))
             .Add(new NotifyTickChangeSystem(contexts))
+            .Add(new MovementSystem(contexts))
             ;
     }
 

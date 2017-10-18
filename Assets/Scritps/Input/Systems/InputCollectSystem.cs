@@ -15,22 +15,22 @@ public class InputCollectSystem : IExecuteSystem
         if (_contexts.game.gameStatus.Value != EnmGameStatus.Running)
             return;
 
-        if (Input.anyKeyDown)
+        if (Input.anyKey)
         {
             var code = KeyCode.Keypad0;
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKey(KeyCode.A))
             {
                 code = KeyCode.A;
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            else if (Input.GetKey(KeyCode.D))
             {
                 code = KeyCode.D;
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S))
             {
                 code = KeyCode.S;
             }
-            else if (Input.GetKeyDown(KeyCode.W))
+            else if (Input.GetKey(KeyCode.W))
             {
                 code = KeyCode.W;
             }

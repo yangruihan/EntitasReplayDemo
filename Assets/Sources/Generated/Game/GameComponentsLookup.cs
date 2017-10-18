@@ -11,27 +11,41 @@ public static class GameComponentsLookup {
     public const int ChangeTickNotify = 0;
     public const int DeltaTime = 1;
     public const int Destroyed = 2;
-    public const int GameStatus = 3;
-    public const int Input = 4;
-    public const int PushTick = 5;
-    public const int Record = 6;
-    public const int Records = 7;
-    public const int ReplaySystem = 8;
-    public const int Tick = 9;
-    public const int Time = 10;
+    public const int Direction = 3;
+    public const int GameStatus = 4;
+    public const int Input = 5;
+    public const int Movable = 6;
+    public const int Move = 7;
+    public const int Player = 8;
+    public const int PlayerInitData = 9;
+    public const int Position = 10;
+    public const int PushTick = 11;
+    public const int Record = 12;
+    public const int Records = 13;
+    public const int ReplaySystem = 14;
+    public const int Speed = 15;
+    public const int Tick = 16;
+    public const int Time = 17;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
         "DeltaTime",
         "Destroyed",
+        "Direction",
         "GameStatus",
         "Input",
+        "Movable",
+        "Move",
+        "Player",
+        "PlayerInitData",
+        "Position",
         "PushTick",
         "Record",
         "Records",
         "ReplaySystem",
+        "Speed",
         "Tick",
         "Time"
     };
@@ -40,12 +54,19 @@ public static class GameComponentsLookup {
         typeof(ChangeTickNotifyComponent),
         typeof(DeltaTimeComponent),
         typeof(DestroyedComponent),
+        typeof(DirectionComponent),
         typeof(GameStatusComponent),
         typeof(InputComponent),
+        typeof(MovableComponent),
+        typeof(MoveComponent),
+        typeof(PlayerComponent),
+        typeof(PlayerInitDataComponent),
+        typeof(PositionComponent),
         typeof(PushTickComponent),
         typeof(RecordComponent),
         typeof(RecordsComponent),
         typeof(ReplaySystemComponent),
+        typeof(SpeedComponent),
         typeof(TickComponent),
         typeof(TimeComponent)
     };
