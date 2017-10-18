@@ -24,11 +24,11 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.hasInput;
+        return entity.isRecordable && entity.hasInput;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.Input);
+        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.Input));
     }
 }

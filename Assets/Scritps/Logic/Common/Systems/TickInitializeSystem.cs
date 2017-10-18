@@ -11,6 +11,6 @@ public class TickInitializeSystem : IInitializeSystem
 
     public void Initialize()
     {
-        _contexts.game.SetTick(0);
+        _contexts.game.ReplaceTick(0);
     }
 }

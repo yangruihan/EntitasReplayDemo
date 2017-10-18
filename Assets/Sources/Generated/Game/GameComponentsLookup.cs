@@ -14,21 +14,22 @@ public static class GameComponentsLookup {
     public const int Direction = 3;
     public const int GameStatus = 4;
     public const int Input = 5;
-    public const int Movable = 6;
-    public const int Move = 7;
-    public const int Player = 8;
-    public const int PlayerInitData = 9;
-    public const int PlayerView = 10;
-    public const int Position = 11;
-    public const int PushTick = 12;
-    public const int Record = 13;
-    public const int Records = 14;
-    public const int ReplaySystem = 15;
-    public const int Speed = 16;
-    public const int Tick = 17;
-    public const int Time = 18;
+    public const int LogicSystem = 6;
+    public const int Movable = 7;
+    public const int Move = 8;
+    public const int Player = 9;
+    public const int PlayerInitData = 10;
+    public const int PlayerView = 11;
+    public const int Position = 12;
+    public const int PushTick = 13;
+    public const int Recordable = 14;
+    public const int Records = 15;
+    public const int Replay = 16;
+    public const int Speed = 17;
+    public const int Tick = 18;
+    public const int Time = 19;
 
-    public const int TotalComponents = 19;
+    public const int TotalComponents = 20;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -37,6 +38,7 @@ public static class GameComponentsLookup {
         "Direction",
         "GameStatus",
         "Input",
+        "LogicSystem",
         "Movable",
         "Move",
         "Player",
@@ -44,9 +46,9 @@ public static class GameComponentsLookup {
         "PlayerView",
         "Position",
         "PushTick",
-        "Record",
+        "Recordable",
         "Records",
-        "ReplaySystem",
+        "Replay",
         "Speed",
         "Tick",
         "Time"
@@ -59,6 +61,7 @@ public static class GameComponentsLookup {
         typeof(DirectionComponent),
         typeof(GameStatusComponent),
         typeof(InputComponent),
+        typeof(LogicSystemComponent),
         typeof(MovableComponent),
         typeof(MoveComponent),
         typeof(PlayerComponent),
@@ -66,9 +69,9 @@ public static class GameComponentsLookup {
         typeof(PlayerViewComponent),
         typeof(PositionComponent),
         typeof(PushTickComponent),
-        typeof(RecordComponent),
+        typeof(RecordableComponent),
         typeof(RecordsComponent),
-        typeof(ReplaySystemComponent),
+        typeof(ReplayComponent),
         typeof(SpeedComponent),
         typeof(TickComponent),
         typeof(TimeComponent)

@@ -2,7 +2,7 @@ using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
 [Game, Unique]
-public class ReplaySystemComponent : IComponent
+public class LogicSystemComponent : IComponent
 {
     public Systems Value;
 }
