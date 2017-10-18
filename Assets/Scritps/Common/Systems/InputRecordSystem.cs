@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 public class InputRecordSystem : ReactiveSystem<GameEntity>
 {
@@ -17,17 +18,18 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
         foreach (var entity in entities)
         {
             records.Add(new InputRecordData(entity.input.Tick, entity.input.KeyCode));
+            Debug.LogFormat("Record Input {0} {1}", entity.input.Tick, entity.input.KeyCode);
         }
         _contexts.game.ReplaceRecords(records);
     }
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.isRecord && entity.hasInput;
+        return entity.hasInput;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.Record);
+        return context.CreateCollector(GameMatcher.Input);
     }
 }

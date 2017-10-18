@@ -1,30 +1,22 @@
 using System.Collections.Generic;
 using Entitas;
 
-public class CleanUpDestroyedEntitySystem : ReactiveSystem<GameEntity>
+public class CleanUpDestroyedEntitySystem : ICleanupSystem
 {
     private Contexts _contexts;
+    private IGroup<GameEntity> _destroyedGroup;
 
-    public CleanUpDestroyedEntitySystem(Contexts contexts) : base(contexts.game)
+    public CleanUpDestroyedEntitySystem(Contexts _contexts)
     {
-        _contexts = contexts;
+        this._contexts = _contexts;
+        _destroyedGroup = _contexts.game.GetGroup(GameMatcher.Destroyed);
     }
 
-    protected override void Execute(List<GameEntity> entities)
+    public void Cleanup()
     {
-        foreach (var entity in entities)
+        foreach (var entity in _destroyedGroup.GetEntities())
         {
             entity.Destroy();
         }
-    }
-
-    protected override bool Filter(GameEntity entity)
-    {
-        return entity.isDestroyed;
-    }
-
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
-    {
-        return context.CreateCollector(GameMatcher.Destroyed);
     }
 }

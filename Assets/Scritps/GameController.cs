@@ -3,16 +3,26 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-
     private Systems systems;
 
     void Start()
     {
         var contexts = Contexts.sharedInstance;
 
-        systems = createSystems(contexts);
-        var logicSystems = createLogicSystems(contexts);
+        systems = new Systems();
+
+        var inputSystems = CreateInputSystems(contexts);
+        systems.Add(inputSystems);
+
+        var generalSystems = CreateGeneralSystems(contexts);
+        systems.Add(generalSystems);
+
+        var logicSystems = CreateLogicSystems(contexts);
         systems.Add(logicSystems);
+
+        var replaySystems = CreateReplaySystems(contexts);
+        systems.Add(replaySystems);
+
         contexts.game.SetReplaySystem(logicSystems);
 
         systems.Initialize();
@@ -29,24 +39,33 @@ public class GameController : MonoBehaviour
         systems.TearDown();
     }
 
-    Systems createSystems(Contexts contexts)
+    /// <summary>
+    /// General
+    /// </summary>
+    Systems CreateGeneralSystems(Contexts contexts)
     {
         return new Feature("Game")
             .Add(new GameInitializeSystem(contexts))
 
             .Add(new PushTickSystem(contexts))
             .Add(new UpdateDeltaTimeSystem(contexts))
-            .Add(new InputCollectSystem(contexts))
-
-            .Add(new CleanUpInputSystem(contexts))
 
             .Add(new ChangeGameTimeSystem(contexts))
-            .Add(new InputRecordSystem(contexts))
+
             .Add(new CleanUpDestroyedEntitySystem(contexts))
             ;
     }
 
-    Systems createLogicSystems(Contexts contexts)
+    Systems CreateInputSystems(Contexts contexts)
+    {
+        return new Feature("Input")
+            .Add(new InputCollectSystem(contexts))
+
+            .Add(new CleanUpInputSystem(contexts))
+            ;
+    }
+
+    Systems CreateLogicSystems(Contexts contexts)
     {
         return new Feature("Logic")
             .Add(new TickInitializeSystem(contexts))
@@ -54,6 +73,13 @@ public class GameController : MonoBehaviour
             .Add(new ChangeTickSystem(contexts))
             .Add(new InputHandleSystem(contexts))
             .Add(new NotifyTickChangeSystem(contexts))
+            ;
+    }
+
+    Systems CreateReplaySystems(Contexts contexts)
+    {
+        return new Feature("Replay")
+            .Add(new InputRecordSystem(contexts))
             ;
     }
 }
