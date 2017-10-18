@@ -18,7 +18,6 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
         foreach (var entity in entities)
         {
             records.Add(new InputRecordData(entity.input.Tick, entity.input.KeyCode));
-            Debug.LogFormat("Record Input {0} {1}", entity.input.Tick, entity.input.KeyCode);
         }
         _contexts.game.ReplaceRecords(records);
     }

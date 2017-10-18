@@ -72,10 +72,12 @@ public class GameController : MonoBehaviour
             .Add(new TickInitializeSystem(contexts))
             .Add(new PlayerInitializeSystem(contexts))
 
+            .Add(new PlayerBindScriptSystem(contexts))
             .Add(new ChangeTickSystem(contexts))
             .Add(new InputHandleSystem(contexts))
             .Add(new NotifyTickChangeSystem(contexts))
             .Add(new MovementSystem(contexts))
+            .Add(new ChangePlayerPositionSystem(contexts))
             ;
     }
 

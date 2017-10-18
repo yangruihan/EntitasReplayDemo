@@ -28,8 +28,6 @@ public class InputHandleSystem : ReactiveSystem<GameEntity>
 
         foreach (var entity in entities)
         {
-            Debug.Log(entity.input.KeyCode);
-
             switch (entity.input.KeyCode)
             {
                 case KeyCode.A:
