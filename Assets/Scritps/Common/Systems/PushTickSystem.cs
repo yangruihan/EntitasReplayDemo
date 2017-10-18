@@ -14,7 +14,9 @@ public class PushTickSystem : IExecuteSystem
         if (_contexts.game.gameStatus.Value != EnmGameStatus.Running)
             return;
 
-        var entity = _contexts.game.CreateEntity();
-        entity.isPushTick = true;
+        _contexts.game.ReplacePushTick(true);
+        //_contexts.game.isPushTick = true;
+        //var entity = _contexts.game.CreateEntity();
+        //entity.isPushTick = true;
     }
 }

@@ -15,13 +15,12 @@ public class ChangeTickSystem : ReactiveSystem<GameEntity>
         foreach (var entity in entities)
         {
             _contexts.game.ReplaceTick(_contexts.game.tick.Value + 1);
-            entity.isDestroyed = true;
         }
     }
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.isPushTick;
+        return entity.hasPushTick;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
