@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entitas;
 
 public class GameInitializeSystem : IInitializeSystem
@@ -12,6 +11,7 @@ public class GameInitializeSystem : IInitializeSystem
 
     public void Initialize()
     {
-        _contexts.game.ReplaceGameStatus(EnmGameStatus.Running);
+        _contexts.game.SetTime(0);
+        _contexts.game.SetGameStatus(EnmGameStatus.Running);
     }
 }

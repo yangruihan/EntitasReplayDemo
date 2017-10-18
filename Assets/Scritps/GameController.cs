@@ -34,8 +34,10 @@ public class GameController : MonoBehaviour
         return new Feature("Game")
             .Add(new GameInitializeSystem(contexts))
 
+            .Add(new UpdateDeltaTimeSystem(contexts))
             .Add(new InputCollectSystem(contexts))
 
+            .Add(new ChangeGameTimeSystem(contexts))
             .Add(new InputDispatchSystem(contexts))
             .Add(new InputRecordSystem(contexts))
             .Add(new CleanUpDestroyedEntitySystem(contexts))
@@ -46,8 +48,6 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Logic")
             .Add(new TickInitializeSystem(contexts))
-
-            .Add(new UpdateDeltaTimeSystem(contexts))
 
             .Add(new ChangeTickSystem(contexts))
             .Add(new NotifyTickChangeSystem(contexts))

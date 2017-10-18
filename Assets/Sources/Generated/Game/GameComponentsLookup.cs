@@ -17,8 +17,9 @@ public static class GameComponentsLookup {
     public const int Records = 6;
     public const int ReplaySystem = 7;
     public const int Tick = 8;
+    public const int Time = 9;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -29,7 +30,8 @@ public static class GameComponentsLookup {
         "Record",
         "Records",
         "ReplaySystem",
-        "Tick"
+        "Tick",
+        "Time"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -41,6 +43,7 @@ public static class GameComponentsLookup {
         typeof(RecordComponent),
         typeof(RecordsComponent),
         typeof(ReplaySystemComponent),
-        typeof(TickComponent)
+        typeof(TickComponent),
+        typeof(TimeComponent)
     };
 }
