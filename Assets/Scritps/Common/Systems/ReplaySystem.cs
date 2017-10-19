@@ -14,11 +14,15 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
     {
         var logicSys = _contexts.game.logicSystem.Value;
         if (logicSys == null)
+        {
             return;
+        }
 
         var inputRecords = _contexts.game.records.InputRecords;
         if (inputRecords == null)
+        {
             return;
+        }
 
         foreach (var entity in entities)
         {

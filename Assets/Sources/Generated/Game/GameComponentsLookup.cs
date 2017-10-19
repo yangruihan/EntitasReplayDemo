@@ -14,25 +14,26 @@ public static class GameComponentsLookup {
     public const int Direction = 3;
     public const int GameStatus = 4;
     public const int Input = 5;
-    public const int LogicSystem = 6;
-    public const int LogicTime = 7;
-    public const int Movable = 8;
-    public const int Move = 9;
-    public const int NewGameStatus = 10;
-    public const int PauseBtnClick = 11;
-    public const int Player = 12;
-    public const int PlayerInitData = 13;
-    public const int PlayerView = 14;
-    public const int Position = 15;
-    public const int PushTick = 16;
-    public const int Recordable = 17;
-    public const int Records = 18;
-    public const int Replay = 19;
-    public const int Speed = 20;
-    public const int Tick = 21;
-    public const int Time = 22;
+    public const int LastTick = 6;
+    public const int LogicSystem = 7;
+    public const int LogicTime = 8;
+    public const int Movable = 9;
+    public const int Move = 10;
+    public const int NewGameStatus = 11;
+    public const int PauseBtnClick = 12;
+    public const int Player = 13;
+    public const int PlayerInitData = 14;
+    public const int PlayerView = 15;
+    public const int Position = 16;
+    public const int PushTick = 17;
+    public const int Recordable = 18;
+    public const int Records = 19;
+    public const int Replay = 20;
+    public const int Speed = 21;
+    public const int Tick = 22;
+    public const int Time = 23;
 
-    public const int TotalComponents = 23;
+    public const int TotalComponents = 24;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -41,6 +42,7 @@ public static class GameComponentsLookup {
         "Direction",
         "GameStatus",
         "Input",
+        "LastTick",
         "LogicSystem",
         "LogicTime",
         "Movable",
@@ -67,6 +69,7 @@ public static class GameComponentsLookup {
         typeof(DirectionComponent),
         typeof(GameStatusComponent),
         typeof(InputComponent),
+        typeof(LastTickComponent),
         typeof(LogicSystemComponent),
         typeof(LogicTimeComponent),
         typeof(MovableComponent),
