@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour
         var replaySystems = CreateReplaySystems(contexts);
         systems.Add(replaySystems);
 
+        var uiSystems = CreateUISystems(contexts);
+        systems.Add(uiSystems);
+
         contexts.game.SetLogicSystem(logicSystems);
 
         systems.Initialize();
@@ -90,6 +93,13 @@ public class GameController : MonoBehaviour
         return new Feature("Replay")
             .Add(new InputRecordSystem(contexts))
             .Add(new ReplaySystem(contexts))
+            ;
+    }
+
+    Systems CreateUISystems(Contexts contexts)
+    {
+        return new Feature("UI")
+            .Add(new PauseButtonEventHandleSystem(contexts))
             ;
     }
 }

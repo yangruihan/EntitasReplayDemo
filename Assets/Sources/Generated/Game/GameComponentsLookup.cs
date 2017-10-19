@@ -19,19 +19,20 @@ public static class GameComponentsLookup {
     public const int Movable = 8;
     public const int Move = 9;
     public const int NewGameStatus = 10;
-    public const int Player = 11;
-    public const int PlayerInitData = 12;
-    public const int PlayerView = 13;
-    public const int Position = 14;
-    public const int PushTick = 15;
-    public const int Recordable = 16;
-    public const int Records = 17;
-    public const int Replay = 18;
-    public const int Speed = 19;
-    public const int Tick = 20;
-    public const int Time = 21;
+    public const int PauseBtnClick = 11;
+    public const int Player = 12;
+    public const int PlayerInitData = 13;
+    public const int PlayerView = 14;
+    public const int Position = 15;
+    public const int PushTick = 16;
+    public const int Recordable = 17;
+    public const int Records = 18;
+    public const int Replay = 19;
+    public const int Speed = 20;
+    public const int Tick = 21;
+    public const int Time = 22;
 
-    public const int TotalComponents = 22;
+    public const int TotalComponents = 23;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -45,6 +46,7 @@ public static class GameComponentsLookup {
         "Movable",
         "Move",
         "NewGameStatus",
+        "PauseBtnClick",
         "Player",
         "PlayerInitData",
         "PlayerView",
@@ -70,6 +72,7 @@ public static class GameComponentsLookup {
         typeof(MovableComponent),
         typeof(MoveComponent),
         typeof(NewGameStatusComponent),
+        typeof(PauseBtnClickComponent),
         typeof(PlayerComponent),
         typeof(PlayerInitDataComponent),
         typeof(PlayerViewComponent),
