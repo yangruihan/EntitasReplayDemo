@@ -110,6 +110,8 @@ public class GameController : MonoBehaviour
         return new Feature("UI")
             .Add(new ChangeShowTextContentSystem(contexts))
             .Add(new PauseButtonEventHandleSystem(contexts))
+            .Add(new ChangeRecordSliderEnableSystem(contexts))
+            .Add(new ChangeRecordSliderValueSystem(contexts))
             ;
     }
 }

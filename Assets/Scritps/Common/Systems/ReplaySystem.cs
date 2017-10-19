@@ -24,7 +24,7 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
             logicSys.Initialize();
 
             int inputActionIndex = 0;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i <= count; i++)
             {
                 while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
                 {
@@ -40,6 +40,8 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
                 logicSys.Execute();
                 logicSys.Cleanup();
             }
+
+            entity.isDestroyed = true;
         }
     }
 

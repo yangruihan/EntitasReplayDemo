@@ -29,11 +29,8 @@ public class ChangeShowTextContentSystem : ReactiveSystem<GameEntity>
 
         foreach (var entity in entities)
         {
-            var showTextEntities = _showTextGroup.GetEntities();
-            foreach (var showTextEntity in showTextEntities)
-            {
-                showTextEntity.showText.Value.Show(showInfo);
-            }
+            var showTextEntity = _showTextGroup.GetSingleEntity();
+            showTextEntity.showText.Value.Show(showInfo);
         }
     }
 
