@@ -11,6 +11,10 @@ public class LogicTimeInitializeSystem : IInitializeSystem
 
     public void Initialize()
     {
-        _contexts.game.ReplaceTime(0);
+        _contexts.game.ReplaceLogicTime(
+            0,
+            _contexts.game.logicTime.DeltaTime,
+            _contexts.game.logicTime.TargetFrameRate
+        );
     }
 }

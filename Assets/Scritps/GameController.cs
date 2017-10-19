@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour
     Systems CreateLogicSystems(Contexts contexts)
     {
         return new Feature("Logic")
+            .Add(new LogicTimeInitializeSystem(contexts))
             .Add(new TickInitializeSystem(contexts))
             .Add(new PlayerInitializeSystem(contexts))
 

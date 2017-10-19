@@ -28,14 +28,16 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
             int inputActionIndex = 0;
             for (int i = 0; i < count; i++)
             {
-                if (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
+                while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
                 {
                     var inputAction = inputRecords[inputActionIndex];
                     _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
+                    logicSys.Execute();
+
                     inputActionIndex++;
                 }
 
-                _contexts.game.ReplaceTick(_contexts.game.tick.Value + 1);
+                _contexts.game.ReplacePushTick(true);
 
                 logicSys.Execute();
                 logicSys.Cleanup();

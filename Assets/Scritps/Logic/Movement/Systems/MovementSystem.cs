@@ -14,7 +14,7 @@ public class MovementSystem : ReactiveSystem<GameEntity>
     {
         foreach (var entity in entities)
         {
-            var newPos = entity.position.Value.ToVector2() + entity.move.Direction.ToVector2() * entity.speed.Value * _contexts.game.deltaTime.Value;
+            var newPos = entity.position.Value.ToVector2() + entity.move.Direction.ToVector2() * entity.speed.Value * _contexts.game.logicTime.DeltaTime;
             entity.ReplacePosition(new Position(newPos));
             entity.RemoveMove();
         }
