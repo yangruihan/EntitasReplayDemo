@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
             .Add(new UpdateDeltaTimeSystem(contexts))
 
             .Add(new ChangeGameTimeSystem(contexts))
+            .Add(new ChangeGameStatusSystems(contexts))
 
             .Add(new CleanUpDestroyedEntitySystem(contexts))
             ;
