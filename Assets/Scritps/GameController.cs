@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public LogicInitData LogicInitData;
     public PlayerInitData PlayerInitData;
 
     private Systems systems;
@@ -12,6 +13,7 @@ public class GameController : MonoBehaviour
         var contexts = Contexts.sharedInstance;
 
         contexts.game.SetPlayerInitData(PlayerInitData);
+        contexts.game.SetLogicTime(0, 1.0f / LogicInitData.TargetFrameRate, LogicInitData.TargetFrameRate);
 
         systems = new Systems();
 

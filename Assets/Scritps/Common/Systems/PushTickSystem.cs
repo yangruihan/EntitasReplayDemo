@@ -15,8 +15,5 @@ public class PushTickSystem : IExecuteSystem
             return;
 
         _contexts.game.ReplacePushTick(true);
-        //_contexts.game.isPushTick = true;
-        //var entity = _contexts.game.CreateEntity();
-        //entity.isPushTick = true;
     }
 }
