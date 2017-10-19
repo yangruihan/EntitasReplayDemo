@@ -17,38 +17,33 @@ public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
             switch (entity.newGameStatus.Value)
             {
                 case EnmGameStatus.Running:
-                    var logicSys = _contexts.game.logicSystem.Value;
-                    if (logicSys == null)
-                    {
-                        return;
-                    }
 
-                    var inputRecords = _contexts.game.records.InputRecords;
-                    if (inputRecords == null)
+                    if (_contexts.game.hasLogicSystem && _contexts.game.hasRecords)
                     {
-                        return;
-                    }
+                        var logicSys = _contexts.game.logicSystem.Value;
+                        var inputRecords = _contexts.game.records.InputRecords;
+                        int count = _contexts.game.lastTick.Value;
+                        logicSys.Initialize();
 
-                    int count = _contexts.game.lastTick.Value;
-                    logicSys.Initialize();
-
-                    int inputActionIndex = 0;
-                    for (int i = 0; i < count; i++)
-                    {
-                        while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
+                        int inputActionIndex = 0;
+                        for (int i = 0; i < count; i++)
                         {
-                            var inputAction = inputRecords[inputActionIndex];
-                            _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
+                            while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
+                            {
+                                var inputAction = inputRecords[inputActionIndex];
+                                _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
+                                logicSys.Execute();
+
+                                inputActionIndex++;
+                            }
+
+                            _contexts.game.ReplacePushTick(true);
+
                             logicSys.Execute();
-
-                            inputActionIndex++;
+                            logicSys.Cleanup();
                         }
-
-                        _contexts.game.ReplacePushTick(true);
-
-                        logicSys.Execute();
-                        logicSys.Cleanup();
                     }
+
                     break;
 
                 case EnmGameStatus.Pause:

@@ -12,17 +12,11 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
 
     protected override void Execute(List<GameEntity> entities)
     {
-        var logicSys = _contexts.game.logicSystem.Value;
-        if (logicSys == null)
-        {
+        if (!_contexts.game.hasLogicSystem || !_contexts.game.hasRecords)
             return;
-        }
 
+        var logicSys = _contexts.game.logicSystem.Value;
         var inputRecords = _contexts.game.records.InputRecords;
-        if (inputRecords == null)
-        {
-            return;
-        }
 
         foreach (var entity in entities)
         {

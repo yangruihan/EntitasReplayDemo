@@ -26,6 +26,9 @@ public class GameController : MonoBehaviour
         var logicSystems = CreateLogicSystems(contexts);
         systems.Add(logicSystems);
 
+        var afterLogicSystems = CreateAfterLogicSystems(contexts);
+        systems.Add(afterLogicSystems);
+
         var replaySystems = CreateReplaySystems(contexts);
         systems.Add(replaySystems);
 
@@ -57,7 +60,6 @@ public class GameController : MonoBehaviour
             .Add(new UpdateDeltaTimeSystem(contexts))
 
             .Add(new ChangeGameTimeSystem(contexts))
-            .Add(new ChangeGameStatusSystems(contexts))
 
             .Add(new CleanUpDestroyedEntitySystem(contexts))
             ;
@@ -88,6 +90,13 @@ public class GameController : MonoBehaviour
             ;
     }
 
+    Systems CreateAfterLogicSystems(Contexts contexts)
+    {
+        return new Feature("After Logic")
+            .Add(new ChangeGameStatusSystems(contexts))
+            ;
+    }
+
     Systems CreateReplaySystems(Contexts contexts)
     {
         return new Feature("Replay")
@@ -99,6 +108,7 @@ public class GameController : MonoBehaviour
     Systems CreateUISystems(Contexts contexts)
     {
         return new Feature("UI")
+            .Add(new ChangeShowTextContentSystem(contexts))
             .Add(new PauseButtonEventHandleSystem(contexts))
             ;
     }
