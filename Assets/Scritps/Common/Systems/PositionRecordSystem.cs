@@ -7,7 +7,7 @@ public class PositionRecordSystem : ReactiveSystem<GameEntity>
 
     private Contexts _contexts;
     private IGroup<GameEntity> _playerGroup;
-    private float _timer = 0f;
+    private float _timer = RECORD_INTERVAL_TIME;
 
     public PositionRecordSystem(Contexts _contexts) : base(_contexts.game)
     {
