@@ -33,11 +33,13 @@ public class RecordSliderBehaviour : MonoBehaviour
     public void DisableSlider()
     {
         _slider.interactable = false;
-        _slider.maxValue = 1;
     }
 
     private void OnSliderValueChanged(float value)
     {
+        if (_contexts.game.gameStatus.Value == EnmGameStatus.Running)
+            return;
+
         var toTick = (int)value;
         if (toTick < _contexts.game.lastTick.Value)
         {

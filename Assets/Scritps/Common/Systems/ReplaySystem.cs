@@ -74,7 +74,8 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
             }
         }
 
-        for (int i = startTick + 1; i <= toTick; i++)
+        startTick = startTick == 0 ? 0 : startTick + 1;
+        for (int i = startTick; i <= toTick; i++)
         {
             while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
             {

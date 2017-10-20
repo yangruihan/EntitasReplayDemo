@@ -4,10 +4,12 @@ using Entitas;
 public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
+    private IGroup<GameEntity> _playerGroup;
 
     public ChangeGameStatusSystems(Contexts _contexts) : base(_contexts.game)
     {
         this._contexts = _contexts;
+        _playerGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Player, GameMatcher.Position));
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -18,30 +20,16 @@ public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
             {
                 case EnmGameStatus.Running:
 
-                    if (_contexts.game.hasLogicSystem && _contexts.game.hasInputRecords)
+                    if (_contexts.game.hasLogicSystem && _contexts.game.hasInputRecords && _contexts.game.hasPositionRecords)
                     {
                         var logicSys = _contexts.game.logicSystem.Value;
                         var inputRecords = _contexts.game.inputRecords.Value;
-                        int count = _contexts.game.lastTick.Value;
-                        logicSys.Initialize();
+                        var positionRecords = _contexts.game.positionRecords.Value;
+                        var player = _playerGroup.GetSingleEntity();
 
-                        int inputActionIndex = 0;
-                        for (int i = 0; i < count; i++)
-                        {
-                            while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
-                            {
-                                var inputAction = inputRecords[inputActionIndex];
-                                _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
-                                logicSys.Execute();
+                        var replaySys = _contexts.game.replaySystem.Value;
 
-                                inputActionIndex++;
-                            }
-
-                            _contexts.game.ReplacePushTick(true);
-
-                            logicSys.Execute();
-                            logicSys.Cleanup();
-                        }
+                        replaySys.Replay(logicSys, _contexts.game.lastTick.Value, player, inputRecords, positionRecords);
                     }
 
                     break;
