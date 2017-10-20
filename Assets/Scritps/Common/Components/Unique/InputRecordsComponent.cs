@@ -3,7 +3,7 @@ using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
 [Game, Unique]
-public class RecordsComponent : IComponent
+public class InputRecordsComponent : IComponent
 {
-    public List<InputRecordData> InputRecords;
+    public List<InputRecordData> Value;
 }

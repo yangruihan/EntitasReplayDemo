@@ -101,6 +101,7 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Replay")
             .Add(new InputRecordSystem(contexts))
+            .Add(new PositionRecordSystem(contexts))
             .Add(new ReplaySystem(contexts))
             ;
     }

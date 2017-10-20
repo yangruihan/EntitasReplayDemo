@@ -14,28 +14,29 @@ public static class GameComponentsLookup {
     public const int Direction = 3;
     public const int GameStatus = 4;
     public const int Input = 5;
-    public const int LastTick = 6;
-    public const int LogicSystem = 7;
-    public const int LogicTime = 8;
-    public const int Movable = 9;
-    public const int Move = 10;
-    public const int NewGameStatus = 11;
-    public const int PauseBtnClick = 12;
-    public const int Player = 13;
-    public const int PlayerInitData = 14;
-    public const int PlayerView = 15;
-    public const int Position = 16;
-    public const int PushTick = 17;
-    public const int Recordable = 18;
-    public const int Records = 19;
-    public const int RecordSlider = 20;
-    public const int Replay = 21;
-    public const int ShowText = 22;
-    public const int Speed = 23;
-    public const int Tick = 24;
-    public const int Time = 25;
+    public const int InputRecords = 6;
+    public const int LastTick = 7;
+    public const int LogicSystem = 8;
+    public const int LogicTime = 9;
+    public const int Movable = 10;
+    public const int Move = 11;
+    public const int NewGameStatus = 12;
+    public const int PauseBtnClick = 13;
+    public const int Player = 14;
+    public const int PlayerInitData = 15;
+    public const int PlayerView = 16;
+    public const int Position = 17;
+    public const int PositionRecords = 18;
+    public const int PushTick = 19;
+    public const int Recordable = 20;
+    public const int RecordSlider = 21;
+    public const int Replay = 22;
+    public const int ShowText = 23;
+    public const int Speed = 24;
+    public const int Tick = 25;
+    public const int Time = 26;
 
-    public const int TotalComponents = 26;
+    public const int TotalComponents = 27;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -44,6 +45,7 @@ public static class GameComponentsLookup {
         "Direction",
         "GameStatus",
         "Input",
+        "InputRecords",
         "LastTick",
         "LogicSystem",
         "LogicTime",
@@ -55,9 +57,9 @@ public static class GameComponentsLookup {
         "PlayerInitData",
         "PlayerView",
         "Position",
+        "PositionRecords",
         "PushTick",
         "Recordable",
-        "Records",
         "RecordSlider",
         "Replay",
         "ShowText",
@@ -73,6 +75,7 @@ public static class GameComponentsLookup {
         typeof(DirectionComponent),
         typeof(GameStatusComponent),
         typeof(InputComponent),
+        typeof(InputRecordsComponent),
         typeof(LastTickComponent),
         typeof(LogicSystemComponent),
         typeof(LogicTimeComponent),
@@ -84,9 +87,9 @@ public static class GameComponentsLookup {
         typeof(PlayerInitDataComponent),
         typeof(PlayerViewComponent),
         typeof(PositionComponent),
+        typeof(PositionRecordsComponent),
         typeof(PushTickComponent),
         typeof(RecordableComponent),
-        typeof(RecordsComponent),
         typeof(RecordSliderComponent),
         typeof(ReplayComponent),
         typeof(ShowTextComponent),

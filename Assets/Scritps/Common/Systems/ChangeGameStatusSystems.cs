@@ -18,10 +18,10 @@ public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
             {
                 case EnmGameStatus.Running:
 
-                    if (_contexts.game.hasLogicSystem && _contexts.game.hasRecords)
+                    if (_contexts.game.hasLogicSystem && _contexts.game.hasInputRecords)
                     {
                         var logicSys = _contexts.game.logicSystem.Value;
-                        var inputRecords = _contexts.game.records.InputRecords;
+                        var inputRecords = _contexts.game.inputRecords.Value;
                         int count = _contexts.game.lastTick.Value;
                         logicSys.Initialize();
 
