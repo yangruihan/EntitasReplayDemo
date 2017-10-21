@@ -31,16 +31,16 @@ public class InputHandleSystem : ReactiveSystem<GameEntity>
             switch (entity.input.KeyCode)
             {
                 case KeyCode.A:
-                    _player.AddMove(new Direction(-1, 0));
+                    _player.ReplaceMove(new Direction(-1, 0));
                     break;
                 case KeyCode.D:
-                    _player.AddMove(new Direction(1, 0));
+                    _player.ReplaceMove(new Direction(1, 0));
                     break;
                 case KeyCode.W:
-                    _player.AddMove(new Direction(0, 1));
+                    _player.ReplaceMove(new Direction(0, 1));
                     break;
                 case KeyCode.S:
-                    _player.AddMove(new Direction(0, -1));
+                    _player.ReplaceMove(new Direction(0, -1));
                     break;
             }
         }

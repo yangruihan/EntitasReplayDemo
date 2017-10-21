@@ -4,30 +4,36 @@ using Entitas;
 public class InputRecordSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
+    private IGroup<GameEntity> _recordGroup;
 
     public InputRecordSystem(Contexts _contexts) : base(_contexts.game)
     {
         this._contexts = _contexts;
+        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.InputRecords));
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
-        var records = _contexts.game.hasInputRecords ? _contexts.game.inputRecords.Value : new List<InputRecordData>();
+        var recordEntities = _recordGroup.GetEntities();
 
-        foreach (var entity in entities)
+        foreach (var inputEntity in entities)
         {
-            records.Add(new InputRecordData(entity.input.Tick, entity.input.KeyCode));
+            foreach (var recordEntity in recordEntities)
+            {
+                var records = recordEntity.inputRecords.Value;
+                records.Add(new InputRecordData(inputEntity.input.Tick, inputEntity.input.KeyCode));
+                recordEntity.ReplaceInputRecords(records);
+            }
         }
-        _contexts.game.ReplaceInputRecords(records);
     }
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.isRecordable && entity.hasInput;
+        return entity.hasInput;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.Input));
+        return context.CreateCollector(GameMatcher.Input);
     }
 }

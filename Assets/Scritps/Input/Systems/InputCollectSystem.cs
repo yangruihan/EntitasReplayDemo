@@ -39,7 +39,6 @@ public class InputCollectSystem : IExecuteSystem
             {
                 var entity = _contexts.game.CreateEntity();
                 entity.AddInput(_contexts.game.tick.Value, code);
-                entity.isRecordable = true;
             }
         }
     }

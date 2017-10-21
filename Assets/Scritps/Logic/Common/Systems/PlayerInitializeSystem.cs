@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Entitas;
 
@@ -20,6 +21,9 @@ public class PlayerInitializeSystem : IInitializeSystem
             player = _contexts.game.CreateEntity();
             player.AddPlayer(true);
             player.isMovable = true;
+            player.AddInputRecords(new List<InputRecordData>());
+            player.AddPositionRecords(new List<PositionRecordData>());
+            player.isRecordable = true;
         }
         else
         {

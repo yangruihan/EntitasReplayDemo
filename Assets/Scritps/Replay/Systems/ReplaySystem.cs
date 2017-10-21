@@ -4,31 +4,28 @@ using Entitas;
 public class ReplaySystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
-    private IGroup<GameEntity> _playerGroup;
+    private IGroup<GameEntity> _recordGroup;
 
     public ReplaySystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
-        _playerGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Player, GameMatcher.Position));
+        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.Position, GameMatcher.InputRecords, GameMatcher.PositionRecords));
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
-        if (!_contexts.game.hasLogicSystem || !_contexts.game.hasInputRecords || !_contexts.game.hasPositionRecords)
+        if (!_contexts.game.hasLogicSystem)
         {
-            DebugUtil.LogErrorFormat("Replay System error: record datas error");
+            DebugUtil.LogErrorFormat("Replay System error: there is no logic system");
             return;
         }
 
         var logicSys = _contexts.game.logicSystem.Value;
-        var inputRecords = _contexts.game.inputRecords.Value;
-        var positionRecords = _contexts.game.positionRecords.Value;
-
-        var player = _playerGroup.GetSingleEntity();
+        var recordEntities = _recordGroup.GetEntities();
 
         foreach (var entity in entities)
         {
-            Replay(logicSys, entity.replay.ToTick, player, inputRecords, positionRecords);
+            Replay(logicSys, entity.replay.ToTick, recordEntities);
 
             entity.isDestroyed = true;
         }
@@ -44,37 +41,52 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
         return context.CreateCollector(GameMatcher.Replay);
     }
 
-    public void Replay(Systems logicSys, int toTick, GameEntity player, List<InputRecordData> inputRecords, List<PositionRecordData> positionRecords)
+    public void Replay(Systems logicSys, int toTick, GameEntity[] recordEntities)
     {
         logicSys.Initialize();
 
-        int inputActionIndex = 0;
+        int[] inputActionIndexArr = new int[recordEntities.Length];
         int startTick = 0;
 
-        for (int i = positionRecords.Count - 1; i >= 0; i--)
+        if (recordEntities.Length > 0)
         {
-            var positionRecord = positionRecords[i];
-            if (positionRecord.Tick <= toTick)
+            var positionRecords = recordEntities[0].positionRecords.Value;
+            for (int i = positionRecords.Count - 1; i >= 0 ; i--)
             {
-                startTick = positionRecord.Tick;
-                player.ReplacePosition(positionRecord.Position);
+                var pos = positionRecords[i];
+                if (pos.Tick <= toTick)
+                {
+                    startTick = pos.Tick;
 
-                _contexts.game.ReplaceTick(startTick);
-                _contexts.game.ReplaceLogicTime(
-                    startTick * _contexts.game.logicTime.DeltaTime,
-                    _contexts.game.logicTime.DeltaTime,
-                    _contexts.game.logicTime.TargetFrameRate);
+                    _contexts.game.ReplaceTick(startTick);
+                    _contexts.game.ReplaceLogicTime(
+                        startTick * _contexts.game.logicTime.DeltaTime,
+                        _contexts.game.logicTime.DeltaTime,
+                        _contexts.game.logicTime.TargetFrameRate
+                        );
 
+                    // replace record entities pos
+                    foreach (var recordEntity in recordEntities)
+                    {
+                        recordEntity.ReplacePosition(recordEntity.positionRecords.Value[i].Position);
+                    }
 
-                break;
+                    break;
+                }
             }
         }
 
+        // ignore input actions before startTick 
         if (startTick != 0)
         {
-            while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick <= startTick)
+            for (int i = 0; i < recordEntities.Length; i++)
             {
-                inputActionIndex++;
+                var inputRecords = recordEntities[i].inputRecords.Value;
+                while (inputRecords.Count > inputActionIndexArr[i] &&
+                       inputRecords[inputActionIndexArr[i]].Tick <= startTick)
+                {
+                    inputActionIndexArr[i]++;
+                }
             }
 
             startTick++;
@@ -85,18 +97,22 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
 
         for (int i = startTick; i < toTick; i++)
         {
-            while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
+            for (int j = 0; j < recordEntities.Length; j++)
             {
-                var inputAction = inputRecords[inputActionIndex];
-                _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
-                logicSys.Execute();
-                logicSys.Cleanup();
+                var inputRecords = recordEntities[j].inputRecords.Value;
+                while (inputRecords.Count > inputActionIndexArr[j] &&
+                       inputRecords[inputActionIndexArr[j]].Tick == _contexts.game.tick.Value)
+                {
+                    var inputAction = inputRecords[inputActionIndexArr[j]];
+                    _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
+                    inputActionIndexArr[j]++;
 
-                inputActionIndex++;
+                    logicSys.Execute();
+                    logicSys.Cleanup();
+                }
             }
 
             _contexts.game.ReplacePushTick(true);
-
             logicSys.Execute();
             logicSys.Cleanup();
         }

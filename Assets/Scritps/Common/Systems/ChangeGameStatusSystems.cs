@@ -4,12 +4,12 @@ using Entitas;
 public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
-    private IGroup<GameEntity> _playerGroup;
+    private IGroup<GameEntity> _recordGroup;
 
     public ChangeGameStatusSystems(Contexts _contexts) : base(_contexts.game)
     {
         this._contexts = _contexts;
-        _playerGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Player, GameMatcher.Position));
+        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.Position, GameMatcher.InputRecords, GameMatcher.PositionRecords));
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -19,17 +19,13 @@ public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
             switch (entity.newGameStatus.Value)
             {
                 case EnmGameStatus.Running:
-
-                    if (_contexts.game.hasLogicSystem && _contexts.game.hasInputRecords && _contexts.game.hasPositionRecords)
+                    if (_contexts.game.hasReplaySystem && _contexts.game.hasLogicSystem)
                     {
-                        var logicSys = _contexts.game.logicSystem.Value;
-                        var inputRecords = _contexts.game.inputRecords.Value;
-                        var positionRecords = _contexts.game.positionRecords.Value;
-                        var player = _playerGroup.GetSingleEntity();
-
                         var replaySys = _contexts.game.replaySystem.Value;
+                        var logicSys = _contexts.game.logicSystem.Value;
+                        var recordEntities = _recordGroup.GetEntities();
 
-                        replaySys.Replay(logicSys, _contexts.game.lastTick.Value, player, inputRecords, positionRecords);
+                        replaySys.Replay(logicSys, entity.replay.ToTick, recordEntities);
                     }
 
                     break;

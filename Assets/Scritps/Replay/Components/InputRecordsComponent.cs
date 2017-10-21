@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
 
-[Game, Unique]
+[Game]
 public class InputRecordsComponent : IComponent
 {
     public List<InputRecordData> Value;
