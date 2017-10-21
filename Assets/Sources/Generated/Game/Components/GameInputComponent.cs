@@ -11,17 +11,19 @@ public partial class GameEntity {
     public InputComponent input { get { return (InputComponent)GetComponent(GameComponentsLookup.Input); } }
     public bool hasInput { get { return HasComponent(GameComponentsLookup.Input); } }
 
-    public void AddInput(int newTick, UnityEngine.KeyCode newKeyCode) {
+    public void AddInput(int newID, int newTick, UnityEngine.KeyCode newKeyCode) {
         var index = GameComponentsLookup.Input;
         var component = CreateComponent<InputComponent>(index);
+        component.ID = newID;
         component.Tick = newTick;
         component.KeyCode = newKeyCode;
         AddComponent(index, component);
     }
 
-    public void ReplaceInput(int newTick, UnityEngine.KeyCode newKeyCode) {
+    public void ReplaceInput(int newID, int newTick, UnityEngine.KeyCode newKeyCode) {
         var index = GameComponentsLookup.Input;
         var component = CreateComponent<InputComponent>(index);
+        component.ID = newID;
         component.Tick = newTick;
         component.KeyCode = newKeyCode;
         ReplaceComponent(index, component);

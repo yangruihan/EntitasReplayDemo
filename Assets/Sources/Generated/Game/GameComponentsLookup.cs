@@ -13,31 +13,32 @@ public static class GameComponentsLookup {
     public const int Destroyed = 2;
     public const int Direction = 3;
     public const int GameStatus = 4;
-    public const int Input = 5;
-    public const int InputRecords = 6;
-    public const int LastTick = 7;
-    public const int LogicSystem = 8;
-    public const int LogicTime = 9;
-    public const int Movable = 10;
-    public const int Move = 11;
-    public const int NewGameStatus = 12;
-    public const int PauseBtnClick = 13;
-    public const int Player = 14;
-    public const int PlayerInitData = 15;
-    public const int PlayerView = 16;
-    public const int Position = 17;
-    public const int PositionRecords = 18;
-    public const int PushTick = 19;
-    public const int Recordable = 20;
-    public const int RecordSlider = 21;
-    public const int Replay = 22;
-    public const int ReplaySystem = 23;
-    public const int ShowText = 24;
-    public const int Speed = 25;
-    public const int Tick = 26;
-    public const int Time = 27;
+    public const int ID = 5;
+    public const int Input = 6;
+    public const int InputRecords = 7;
+    public const int LastTick = 8;
+    public const int LogicSystem = 9;
+    public const int LogicTime = 10;
+    public const int Movable = 11;
+    public const int Move = 12;
+    public const int NewGameStatus = 13;
+    public const int PauseBtnClick = 14;
+    public const int Player = 15;
+    public const int PlayerInitData = 16;
+    public const int PlayerView = 17;
+    public const int Position = 18;
+    public const int PositionRecords = 19;
+    public const int PushTick = 20;
+    public const int Recordable = 21;
+    public const int RecordSlider = 22;
+    public const int Replay = 23;
+    public const int ReplaySystem = 24;
+    public const int ShowText = 25;
+    public const int Speed = 26;
+    public const int Tick = 27;
+    public const int Time = 28;
 
-    public const int TotalComponents = 28;
+    public const int TotalComponents = 29;
 
     public static readonly string[] componentNames = {
         "ChangeTickNotify",
@@ -45,6 +46,7 @@ public static class GameComponentsLookup {
         "Destroyed",
         "Direction",
         "GameStatus",
+        "ID",
         "Input",
         "InputRecords",
         "LastTick",
@@ -76,6 +78,7 @@ public static class GameComponentsLookup {
         typeof(DestroyedComponent),
         typeof(DirectionComponent),
         typeof(GameStatusComponent),
+        typeof(IDComponent),
         typeof(InputComponent),
         typeof(InputRecordsComponent),
         typeof(LastTickComponent),

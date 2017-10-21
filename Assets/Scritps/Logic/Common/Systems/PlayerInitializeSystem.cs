@@ -20,6 +20,7 @@ public class PlayerInitializeSystem : IInitializeSystem
         {
             player = _contexts.game.CreateEntity();
             player.AddPlayer(true);
+            player.AddID(0);
             player.isMovable = true;
             player.AddInputRecords(new List<InputRecordData>());
             player.AddPositionRecords(new List<PositionRecordData>());

@@ -38,7 +38,7 @@ public class InputCollectSystem : IExecuteSystem
             if (code != KeyCode.Keypad0)
             {
                 var entity = _contexts.game.CreateEntity();
-                entity.AddInput(_contexts.game.tick.Value, code);
+                entity.AddInput(0, _contexts.game.tick.Value, code);
             }
         }
     }

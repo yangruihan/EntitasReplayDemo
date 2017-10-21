@@ -9,7 +9,9 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
     public ReplaySystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
-        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.Position, GameMatcher.InputRecords, GameMatcher.PositionRecords));
+        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(
+            GameMatcher.ID, GameMatcher.Recordable, GameMatcher.Position,
+            GameMatcher.InputRecords, GameMatcher.PositionRecords));
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -104,7 +106,7 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
                        inputRecords[inputActionIndexArr[j]].Tick == _contexts.game.tick.Value)
                 {
                     var inputAction = inputRecords[inputActionIndexArr[j]];
-                    _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
+                    _contexts.game.CreateEntity().AddInput(recordEntities[j].iD.Value, inputAction.Tick, inputAction.KeyCode);
                     inputActionIndexArr[j]++;
 
                     logicSys.Execute();
