@@ -65,22 +65,32 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
                     _contexts.game.logicTime.DeltaTime,
                     _contexts.game.logicTime.TargetFrameRate);
 
-                while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick < _contexts.game.tick.Value)
-                {
-                    inputActionIndex++;
-                }
 
                 break;
             }
         }
 
-        for (int i = startTick; i <= toTick; i++)
+        if (startTick != 0)
+        {
+            while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick <= startTick)
+            {
+                inputActionIndex++;
+            }
+
+            startTick++;
+            _contexts.game.ReplacePushTick(true);
+            logicSys.Execute();
+            logicSys.Cleanup();
+        }
+
+        for (int i = startTick; i < toTick; i++)
         {
             while (inputRecords.Count > inputActionIndex && inputRecords[inputActionIndex].Tick == _contexts.game.tick.Value)
             {
                 var inputAction = inputRecords[inputActionIndex];
                 _contexts.game.CreateEntity().AddInput(inputAction.Tick, inputAction.KeyCode);
                 logicSys.Execute();
+                logicSys.Cleanup();
 
                 inputActionIndex++;
             }

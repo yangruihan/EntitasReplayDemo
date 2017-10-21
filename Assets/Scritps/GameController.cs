@@ -56,8 +56,8 @@ public class GameController : MonoBehaviour
         return new Feature("Game")
             .Add(new GameInitializeSystem(contexts))
 
-            .Add(new PushTickSystem(contexts))
             .Add(new UpdateDeltaTimeSystem(contexts))
+            .Add(new PushTickSystem(contexts))
 
             .Add(new ChangeGameTimeSystem(contexts))
 

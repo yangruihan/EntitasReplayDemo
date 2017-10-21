@@ -41,7 +41,7 @@ public class RecordSliderBehaviour : MonoBehaviour
             return;
 
         var toTick = (int)value;
-        if (toTick < _contexts.game.lastTick.Value)
+        if (toTick <= _contexts.game.lastTick.Value)
         {
             var entity = _contexts.game.CreateEntity();
             entity.AddReplay(toTick);
