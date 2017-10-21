@@ -15,16 +15,16 @@ public class ChangeShowTextContentSystem : ReactiveSystem<GameEntity>
     protected override void Execute(List<GameEntity> entities)
     {
         var currentTick = _contexts.game.tick.Value;
+        var lastTick = _contexts.game.hasLastTick ? _contexts.game.lastTick.Value : 0;
         string showInfo = "";
 
-        if (_contexts.game.hasLastTick)
+        if (_contexts.game.gameStatus.Value == EnmGameStatus.Pause && _contexts.game.hasLastTick)
         {
-            var lastTick = _contexts.game.lastTick.Value;
             showInfo = string.Format("{0}/{1}", currentTick, lastTick);
         }
         else
         {
-            showInfo = currentTick.ToString();
+            showInfo = string.Format("{0}/{1}", lastTick, currentTick);
         }
 
         foreach (var entity in entities)
