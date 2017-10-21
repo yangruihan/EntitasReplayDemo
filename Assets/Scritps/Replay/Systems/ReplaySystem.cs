@@ -9,6 +9,7 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
     public ReplaySystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
+        _contexts.game.SetReplaySystem(this);
         _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(
             GameMatcher.ID, GameMatcher.Recordable, GameMatcher.Position,
             GameMatcher.InputRecords, GameMatcher.PositionRecords));

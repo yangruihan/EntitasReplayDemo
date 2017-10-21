@@ -13,25 +13,40 @@ public class PlayerInitializeSystem : IInitializeSystem
 
     public void Initialize()
     {
-        var entities = _contexts.game.GetEntitiesWithPlayer(true);
+        var entities = new List<GameEntity>(_contexts.game.GetEntitiesWithPlayer(true));
 
-        GameEntity player;
+        List<GameEntity> players;
         if (entities.Count == 0)
         {
-            player = _contexts.game.CreateEntity();
+            players = new List<GameEntity>();
+
+            var player = _contexts.game.CreateEntity();
             player.AddPlayer(true);
             player.AddID(0);
             player.isMovable = true;
             player.AddInputRecords(new List<InputRecordData>());
             player.AddPositionRecords(new List<PositionRecordData>());
             player.isRecordable = true;
+            players.Add(player);
+
+            var player1 = _contexts.game.CreateEntity();
+            player1.AddPlayer(true);
+            player1.AddID(1);
+            player1.isMovable = true;
+            player1.AddInputRecords(new List<InputRecordData>());
+            player1.AddPositionRecords(new List<PositionRecordData>());
+            player1.isRecordable = true;
+            players.Add(player1);
         }
         else
         {
-            player = entities.First();
+            players = entities;
         }
 
-        player.ReplacePosition(new Position(0, 0));
-        player.ReplaceSpeed(_contexts.game.playerInitData.value.Speed);
+        foreach (var player in players)
+        {
+            player.ReplacePosition(new Position(0, 0));
+            player.ReplaceSpeed(_contexts.game.playerInitData.value.Speed);
+        }
     }
 }

@@ -9,7 +9,7 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
     public InputRecordSystem(Contexts _contexts) : base(_contexts.game)
     {
         this._contexts = _contexts;
-        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.InputRecords));
+        _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Recordable, GameMatcher.InputRecords, GameMatcher.ID));
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -20,6 +20,9 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
         {
             foreach (var recordEntity in recordEntities)
             {
+                if (recordEntity.iD.Value != inputEntity.input.ID)
+                    continue;
+
                 var records = recordEntity.inputRecords.Value;
                 records.Add(new InputRecordData(inputEntity.input.Tick, inputEntity.input.KeyCode));
                 recordEntity.ReplaceInputRecords(records);

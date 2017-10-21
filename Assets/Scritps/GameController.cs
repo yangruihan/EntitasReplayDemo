@@ -99,16 +99,11 @@ public class GameController : MonoBehaviour
 
     Systems CreateReplaySystems(Contexts contexts)
     {
-        var replay = new Feature("Replay")
+        return new Feature("Replay")
             .Add(new InputRecordSystem(contexts))
             .Add(new PositionRecordSystem(contexts))
+            .Add(new ReplaySystem(contexts))
             ;
-
-        var replaySys = new ReplaySystem(contexts);
-        contexts.game.SetReplaySystem(replaySys);
-
-        replay.Add(replaySys);
-        return replay;
     }
 
     Systems CreateUISystems(Contexts contexts)

@@ -4,6 +4,7 @@ using UnityEngine;
 public class InputCollectSystem : IExecuteSystem
 {
     private Contexts _contexts;
+    private int _index = 0;
 
     public InputCollectSystem(Contexts _contexts)
     {
@@ -15,30 +16,65 @@ public class InputCollectSystem : IExecuteSystem
         if (_contexts.game.gameStatus.Value != EnmGameStatus.Running)
             return;
 
+        int id = 0;
+
         if (Input.anyKey)
         {
             var code = KeyCode.Keypad0;
-            if (Input.GetKey(KeyCode.A))
+
+            if (_index == 0)
             {
-                code = KeyCode.A;
+                _index = 1;
+                if (Input.GetKey(KeyCode.A))
+                {
+                    code = KeyCode.A;
+                    id = 0;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    code = KeyCode.D;
+                    id = 0;
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    code = KeyCode.S;
+                    id = 0;
+                }
+                else if (Input.GetKey(KeyCode.W))
+                {
+                    code = KeyCode.W;
+                    id = 0;
+                }
             }
-            else if (Input.GetKey(KeyCode.D))
+            else
             {
-                code = KeyCode.D;
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                code = KeyCode.S;
-            }
-            else if (Input.GetKey(KeyCode.W))
-            {
-                code = KeyCode.W;
+                _index = 0;
+                if (Input.GetKey(KeyCode.J))
+                {
+                    code = KeyCode.J;
+                    id = 1;
+                }
+                else if (Input.GetKey(KeyCode.K))
+                {
+                    code = KeyCode.K;
+                    id = 1;
+                }
+                else if (Input.GetKey(KeyCode.I))
+                {
+                    code = KeyCode.I;
+                    id = 1;
+                }
+                else if (Input.GetKey(KeyCode.L))
+                {
+                    code = KeyCode.L;
+                    id = 1;
+                }
             }
 
             if (code != KeyCode.Keypad0)
             {
                 var entity = _contexts.game.CreateEntity();
-                entity.AddInput(0, _contexts.game.tick.Value, code);
+                entity.AddInput(id, _contexts.game.tick.Value, code);
             }
         }
     }

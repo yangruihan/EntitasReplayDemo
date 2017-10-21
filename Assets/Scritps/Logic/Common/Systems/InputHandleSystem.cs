@@ -24,15 +24,19 @@ public class InputHandleSystem : ReactiveSystem<GameEntity>
             switch (entity.input.KeyCode)
             {
                 case KeyCode.A:
+                case KeyCode.J:
                     moveEntity.ReplaceMove(new Direction(-1, 0));
                     break;
                 case KeyCode.D:
+                case KeyCode.L:
                     moveEntity.ReplaceMove(new Direction(1, 0));
                     break;
                 case KeyCode.W:
+                case KeyCode.I:
                     moveEntity.ReplaceMove(new Direction(0, 1));
                     break;
                 case KeyCode.S:
+                case KeyCode.K:
                     moveEntity.ReplaceMove(new Direction(0, -1));
                     break;
             }

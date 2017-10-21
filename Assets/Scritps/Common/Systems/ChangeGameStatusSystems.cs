@@ -19,13 +19,13 @@ public class ChangeGameStatusSystems : ReactiveSystem<GameEntity>
             switch (entity.newGameStatus.Value)
             {
                 case EnmGameStatus.Running:
-                    if (_contexts.game.hasReplaySystem && _contexts.game.hasLogicSystem)
+                    if (_contexts.game.hasReplaySystem && _contexts.game.hasLogicSystem && _contexts.game.hasLastTick)
                     {
                         var replaySys = _contexts.game.replaySystem.Value;
                         var logicSys = _contexts.game.logicSystem.Value;
                         var recordEntities = _recordGroup.GetEntities();
 
-                        replaySys.Replay(logicSys, entity.replay.ToTick, recordEntities);
+                        replaySys.Replay(logicSys, _contexts.game.lastTick.Value, recordEntities);
                     }
 
                     break;
