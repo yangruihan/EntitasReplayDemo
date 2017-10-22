@@ -54,19 +54,12 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
         if (recordEntities.Length > 0)
         {
             var positionRecords = recordEntities[0].positionRecords.Value;
-            for (int i = positionRecords.Count - 1; i >= 0 ; i--)
+            for (int i = positionRecords.Count - 1; i >= 0; i--)
             {
                 var pos = positionRecords[i];
                 if (pos.Tick <= toTick)
                 {
                     startTick = pos.Tick;
-
-                    _contexts.game.ReplaceTick(startTick);
-                    _contexts.game.ReplaceLogicTime(
-                        startTick * _contexts.game.logicTime.DeltaTime,
-                        _contexts.game.logicTime.DeltaTime,
-                        _contexts.game.logicTime.TargetFrameRate
-                        );
 
                     // replace record entities pos
                     foreach (var recordEntity in recordEntities)
@@ -77,6 +70,17 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
                     break;
                 }
             }
+        }
+
+        if (startTick == toTick)
+        {
+            _contexts.game.ReplaceTick(startTick);
+            _contexts.game.ReplaceLogicTime(
+                startTick * _contexts.game.logicTime.DeltaTime,
+                _contexts.game.logicTime.DeltaTime,
+                _contexts.game.logicTime.TargetFrameRate
+                );
+            return;
         }
 
         // ignore input actions before startTick 
@@ -93,9 +97,13 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
             }
 
             startTick++;
-            _contexts.game.ReplacePushTick(true);
-            logicSys.Execute();
-            logicSys.Cleanup();
+
+            _contexts.game.ReplaceTick(startTick);
+            _contexts.game.ReplaceLogicTime(
+                startTick * _contexts.game.logicTime.DeltaTime,
+                _contexts.game.logicTime.DeltaTime,
+                _contexts.game.logicTime.TargetFrameRate
+                );
         }
 
         for (int i = startTick; i < toTick; i++)
@@ -118,6 +126,7 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
             _contexts.game.ReplacePushTick(true);
             logicSys.Execute();
             logicSys.Cleanup();
+
         }
     }
 }

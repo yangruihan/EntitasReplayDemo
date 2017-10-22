@@ -20,12 +20,13 @@ public class InputRecordSystem : ReactiveSystem<GameEntity>
         {
             foreach (var recordEntity in recordEntities)
             {
-                if (recordEntity.iD.Value != inputEntity.input.ID)
+                if (recordEntity.iD.Value != inputEntity.input.ID
+                || recordEntity.inputRecords.CurrentTick > inputEntity.input.Tick)
                     continue;
 
                 var records = recordEntity.inputRecords.Value;
                 records.Add(new InputRecordData(inputEntity.input.Tick, inputEntity.input.KeyCode));
-                recordEntity.ReplaceInputRecords(records);
+                recordEntity.ReplaceInputRecords(inputEntity.input.Tick, records);
             }
         }
     }

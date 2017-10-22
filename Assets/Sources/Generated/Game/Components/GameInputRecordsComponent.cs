@@ -11,16 +11,18 @@ public partial class GameEntity {
     public InputRecordsComponent inputRecords { get { return (InputRecordsComponent)GetComponent(GameComponentsLookup.InputRecords); } }
     public bool hasInputRecords { get { return HasComponent(GameComponentsLookup.InputRecords); } }
 
-    public void AddInputRecords(System.Collections.Generic.List<InputRecordData> newValue) {
+    public void AddInputRecords(int newCurrentTick, System.Collections.Generic.List<InputRecordData> newValue) {
         var index = GameComponentsLookup.InputRecords;
         var component = CreateComponent<InputRecordsComponent>(index);
+        component.CurrentTick = newCurrentTick;
         component.Value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceInputRecords(System.Collections.Generic.List<InputRecordData> newValue) {
+    public void ReplaceInputRecords(int newCurrentTick, System.Collections.Generic.List<InputRecordData> newValue) {
         var index = GameComponentsLookup.InputRecords;
         var component = CreateComponent<InputRecordsComponent>(index);
+        component.CurrentTick = newCurrentTick;
         component.Value = newValue;
         ReplaceComponent(index, component);
     }
