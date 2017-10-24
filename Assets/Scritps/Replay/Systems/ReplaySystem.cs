@@ -9,7 +9,6 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
     public ReplaySystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
-        _contexts.game.SetReplaySystem(this);
         _recordGroup = _contexts.game.GetGroup(GameMatcher.AllOf(
             GameMatcher.ID, GameMatcher.Recordable, GameMatcher.Position,
             GameMatcher.InputRecords, GameMatcher.PositionRecords));
@@ -28,7 +27,7 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
 
         foreach (var entity in entities)
         {
-            Replay(logicSys, entity.replay.ToTick, recordEntities);
+            ReplayUtil.Replay(_contexts, logicSys, entity.replay.ToTick, recordEntities);
 
             entity.isDestroyed = true;
         }
@@ -44,89 +43,5 @@ public class ReplaySystem : ReactiveSystem<GameEntity>
         return context.CreateCollector(GameMatcher.Replay);
     }
 
-    public void Replay(Systems logicSys, int toTick, GameEntity[] recordEntities)
-    {
-        logicSys.Initialize();
 
-        int[] inputActionIndexArr = new int[recordEntities.Length];
-        int startTick = 0;
-
-        if (recordEntities.Length > 0)
-        {
-            var positionRecords = recordEntities[0].positionRecords.Value;
-            for (int i = positionRecords.Count - 1; i >= 0; i--)
-            {
-                var pos = positionRecords[i];
-                if (pos.Tick <= toTick)
-                {
-                    startTick = pos.Tick;
-
-                    // replace record entities pos
-                    foreach (var recordEntity in recordEntities)
-                    {
-                        recordEntity.ReplacePosition(recordEntity.positionRecords.Value[i].Position);
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        if (startTick == toTick)
-        {
-            _contexts.game.ReplaceTick(startTick);
-            _contexts.game.ReplaceLogicTime(
-                startTick * _contexts.game.logicTime.DeltaTime,
-                _contexts.game.logicTime.DeltaTime,
-                _contexts.game.logicTime.TargetFrameRate
-                );
-            return;
-        }
-
-        // ignore input actions before startTick 
-        if (startTick != 0)
-        {
-            for (int i = 0; i < recordEntities.Length; i++)
-            {
-                var inputRecords = recordEntities[i].inputRecords.Value;
-                while (inputRecords.Count > inputActionIndexArr[i] &&
-                       inputRecords[inputActionIndexArr[i]].Tick <= startTick)
-                {
-                    inputActionIndexArr[i]++;
-                }
-            }
-
-            startTick++;
-
-            _contexts.game.ReplaceTick(startTick);
-            _contexts.game.ReplaceLogicTime(
-                startTick * _contexts.game.logicTime.DeltaTime,
-                _contexts.game.logicTime.DeltaTime,
-                _contexts.game.logicTime.TargetFrameRate
-                );
-        }
-
-        for (int i = startTick; i < toTick; i++)
-        {
-            for (int j = 0; j < recordEntities.Length; j++)
-            {
-                var inputRecords = recordEntities[j].inputRecords.Value;
-                while (inputRecords.Count > inputActionIndexArr[j] &&
-                       inputRecords[inputActionIndexArr[j]].Tick == _contexts.game.tick.Value)
-                {
-                    var inputAction = inputRecords[inputActionIndexArr[j]];
-                    _contexts.game.CreateEntity().AddInput(recordEntities[j].iD.Value, inputAction.Tick, inputAction.KeyCode);
-                    inputActionIndexArr[j]++;
-
-                    logicSys.Execute();
-                    logicSys.Cleanup();
-                }
-            }
-
-            _contexts.game.ReplacePushTick(true);
-            logicSys.Execute();
-            logicSys.Cleanup();
-
-        }
-    }
 }
