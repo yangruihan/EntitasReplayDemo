@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.CodeGeneration.Attributes;
 using UnityEngine;
 
-[Game]
+[Game, Unique]
 public class InputComponent : IComponent
 {
     public int ID;

@@ -73,7 +73,7 @@ public class ReplayUtil
                        inputRecords[inputActionIndexArr[j]].Tick == contexts.game.tick.Value)
                 {
                     var inputAction = inputRecords[inputActionIndexArr[j]];
-                    contexts.game.CreateEntity().AddInput(recordEntities[j].iD.Value, inputAction.Tick, inputAction.KeyCode);
+                    contexts.game.ReplaceInput(recordEntities[j].iD.Value, inputAction.Tick, inputAction.KeyCode);
                     inputActionIndexArr[j]++;
 
                     logicSys.Execute();

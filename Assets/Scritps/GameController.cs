@@ -69,8 +69,6 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Input")
             .Add(new InputCollectSystem(contexts))
-
-            .Add(new CleanUpInputSystem(contexts))
             ;
     }
 
